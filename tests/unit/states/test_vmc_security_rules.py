@@ -67,14 +67,13 @@ def test_present_state_when_error_from_get_by_id(get_mocked_data):
 
     with patch.dict(vmc_security_rules.__salt__, {"vmc_security_rules.get_by_id": mock_get_by_id}):
         result = vmc_security_rules.present(
-            name="test_present",
+            name=mocked_ok_response["id"],
             hostname=mocked_hostname,
             refresh_key="refresh_key",
             authorization_host="authorization_host",
             org_id="org_id",
             sddc_id="sddc_id",
             domain_id="domain_id",
-            rule_id=mocked_ok_response["id"],
         )
 
     assert result is not None
@@ -101,14 +100,13 @@ def test_present_state_when_error_from_create(get_mocked_data):
         },
     ):
         result = vmc_security_rules.present(
-            name="test_present",
+            name="rule-id",
             hostname=mocked_hostname,
             refresh_key="refresh_key",
             authorization_host="authorization_host",
             org_id="org_id",
             sddc_id="sddc_id",
             domain_id="domain_id",
-            rule_id="rule-id",
         )
 
     assert result is not None
@@ -137,14 +135,13 @@ def test_present_state_when_error_from_update(get_mocked_data):
         },
     ):
         result = vmc_security_rules.present(
-            name="test_present",
+            name=mocked_ok_response["id"],
             hostname=mocked_hostname,
             refresh_key="refresh_key",
             authorization_host="authorization_host",
             org_id="org_id",
             sddc_id="sddc_id",
             domain_id="domain_id",
-            rule_id=mocked_ok_response["id"],
             display_name="rule-1",
         )
 
@@ -178,15 +175,14 @@ def test_present_state_during_update_to_add_a_new_field(get_mocked_data):
         },
     ):
         result = vmc_security_rules.present(
-            name="test_present",
+            name="rule_id",
             hostname=mocked_hostname,
             refresh_key="refresh_key",
             authorization_host="authorization_host",
             org_id="org_id",
             sddc_id="sddc_id",
             domain_id="domain_id",
-            rule_id=mocked_ok_response["id"],
-            display_name="rule-1",
+            display_name="rule_id",
         )
 
     assert result is not None
@@ -213,14 +209,13 @@ def test_present_to_create_when_module_returns_success_response(get_mocked_data)
         },
     ):
         result = vmc_security_rules.present(
-            name="test_present",
+            name=rule_id,
             hostname=mocked_hostname,
             refresh_key="refresh_key",
             authorization_host="authorization_host",
             org_id="org_id",
             sddc_id="sddc_id",
             domain_id="domain_id",
-            rule_id=rule_id,
         )
 
     assert result is not None
@@ -252,15 +247,14 @@ def test_present_to_update_when_module_returns_success_response(get_mocked_data)
         },
     ):
         result = vmc_security_rules.present(
-            name="test_present",
+            name="rule_id",
             hostname=mocked_hostname,
             refresh_key="refresh_key",
             authorization_host="authorization_host",
             org_id="org_id",
             sddc_id="sddc_id",
             domain_id="domain_id",
-            rule_id=rule_id,
-            display_name="rule-1",
+            display_name="rule_id",
         )
 
     assert result is not None
@@ -291,14 +285,13 @@ def test_present_to_update_when_get_by_id_after_update_returns_error(get_mocked_
         },
     ):
         result = vmc_security_rules.present(
-            name="test_present",
+            name="rule-1",
             hostname=mocked_hostname,
             refresh_key="refresh_key",
             authorization_host="authorization_host",
             org_id="org_id",
             sddc_id="sddc_id",
             domain_id="domain_id",
-            rule_id=rule_id,
             display_name="rule-1",
         )
 
@@ -325,14 +318,13 @@ def test_present_to_update_when_user_input_and_existing_security_rule_has_identi
         {"vmc_security_rules.get_by_id": mock_get_by_id_response},
     ):
         result = vmc_security_rules.present(
-            name="test_present",
+            name=mocked_ok_response["id"],
             hostname=mocked_hostname,
             refresh_key="refresh_key",
             authorization_host="authorization_host",
             org_id="org_id",
             sddc_id="sddc_id",
             domain_id="domain_id",
-            rule_id=mocked_ok_response["id"],
         )
 
     assert result is not None
@@ -353,14 +345,13 @@ def test_present_state_for_create_when_opts_test_is_true(get_mocked_data):
     ):
         with patch.dict(vmc_security_rules.__opts__, {"test": True}):
             result = vmc_security_rules.present(
-                name="test_present",
+                name=rule_id,
                 hostname=mocked_hostname,
                 refresh_key="refresh_key",
                 authorization_host="authorization_host",
                 org_id="org_id",
                 sddc_id="sddc_id",
                 domain_id="domain_id",
-                rule_id=rule_id,
             )
 
     assert result is not None
@@ -383,14 +374,13 @@ def test_present_state_for_update_when_opts_test_is_true(get_mocked_data):
     ):
         with patch.dict(vmc_security_rules.__opts__, {"test": True}):
             result = vmc_security_rules.present(
-                name="test_present",
+                name=rule_id,
                 hostname=mocked_hostname,
                 refresh_key="refresh_key",
                 authorization_host="authorization_host",
                 org_id="org_id",
                 sddc_id="sddc_id",
                 domain_id="domain_id",
-                rule_id=rule_id,
             )
 
     assert result is not None
@@ -418,14 +408,13 @@ def test_absent_state_to_delete_when_module_returns_success_response(get_mocked_
         },
     ):
         result = vmc_security_rules.absent(
-            name="test_absent",
+            name=rule_id,
             hostname=mocked_hostname,
             refresh_key="refresh_key",
             authorization_host="authorization_host",
             org_id="org_id",
             sddc_id="sddc_id",
             domain_id="domain_id",
-            rule_id=rule_id,
         )
 
     assert result is not None
@@ -445,14 +434,13 @@ def test_absent_state_when_object_to_delete_does_not_exists(get_mocked_data):
         {"vmc_security_rules.get_by_id": mock_get_by_id_response},
     ):
         result = vmc_security_rules.absent(
-            name="test_absent",
+            name=rule_id,
             hostname=mocked_hostname,
             refresh_key="refresh_key",
             authorization_host="authorization_host",
             org_id="org_id",
             sddc_id="sddc_id",
             domain_id="domain_id",
-            rule_id=rule_id,
         )
 
     assert result is not None
@@ -475,14 +463,13 @@ def test_absent_state_to_delete_when_opts_test_mode_is_true(get_mocked_data):
     ):
         with patch.dict(vmc_security_rules.__opts__, {"test": True}):
             result = vmc_security_rules.absent(
-                name="test_absent",
+                name=rule_id,
                 hostname=mocked_hostname,
                 refresh_key="refresh_key",
                 authorization_host="authorization_host",
                 org_id="org_id",
                 sddc_id="sddc_id",
                 domain_id="domain_id",
-                rule_id=rule_id,
             )
 
     assert result is not None
@@ -505,14 +492,13 @@ def test_absent_state_when_object_to_delete_doesn_not_exists_and_opts_test_mode_
     ):
         with patch.dict(vmc_security_rules.__opts__, {"test": True}):
             result = vmc_security_rules.absent(
-                name="test_absent",
+                name=rule_id,
                 hostname=mocked_hostname,
                 refresh_key="refresh_key",
                 authorization_host="authorization_host",
                 org_id="org_id",
                 sddc_id="sddc_id",
                 domain_id="domain_id",
-                rule_id=rule_id,
             )
 
     assert result is not None
@@ -541,14 +527,13 @@ def test_absent_with_error_from_delete(get_mocked_data):
         },
     ):
         result = vmc_security_rules.absent(
-            name="test_absent",
+            name=mocked_ok_response["id"],
             hostname=mocked_hostname,
             refresh_key="refresh_key",
             authorization_host="authorization_host",
             org_id="org_id",
             sddc_id="sddc_id",
             domain_id="domain_id",
-            rule_id="rule_id",
         )
 
     assert result is not None
@@ -568,14 +553,13 @@ def test_absent_state_when_error_from_get_by_id(get_mocked_data):
 
     with patch.dict(vmc_security_rules.__salt__, {"vmc_security_rules.get_by_id": mock_get_by_id}):
         result = vmc_security_rules.absent(
-            name="test_absent",
+            name="rule_id",
             hostname=mocked_hostname,
             refresh_key="refresh_key",
             authorization_host="authorization_host",
             org_id="org_id",
             sddc_id="sddc_id",
             domain_id="domain_id",
-            rule_id=mocked_ok_response["id"],
         )
 
     assert result is not None
